@@ -42,4 +42,9 @@ public class Node<T> {
         _edges.add(edgeTo);
     }
 
+    @Override
+    public String toString() {
+        return "(" + getIndex() + ":" + getValue().toString() + ")";
+    }
+
 }

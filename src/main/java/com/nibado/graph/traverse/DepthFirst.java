@@ -1,12 +1,13 @@
 package com.nibado.graph.traverse;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.nibado.graph.Graph;
 import com.nibado.graph.Node;
 
-public class DepthFirst<T> implements GraphFind<T> {
+public class DepthFirst<T> implements NodeFind<T>, PathFind<T> {
 
     public Node<T> find(final Graph<T> graph, final T value) {
         final List<Node<T>> nodes = new ArrayList<Node<T>>(1);
@@ -17,7 +18,6 @@ public class DepthFirst<T> implements GraphFind<T> {
         else {
             return null;
         }
-
     }
 
     public List<Node<T>> findAll(final Graph<T> graph, final T value) {
@@ -30,13 +30,16 @@ public class DepthFirst<T> implements GraphFind<T> {
 
     private void find(final Node<T> node, final T value, final boolean returnFirst, final BitMap visited, final List<Node<T>> nodes) {
         visited.set(node.getIndex(), true);
+        if (nodes.size() > 0 && returnFirst) {
+            return;
+        }
         if (node.getValue().equals(value)) {
             nodes.add(node);
             if (returnFirst)
                 return;
         }
         for (final Node<T> e : node.getEdges()) {
-            if (!visited.get(node.getIndex())) {
+            if (!visited.get(e.getIndex())) {
                 find(e, value, returnFirst, visited, nodes);
             }
         }
@@ -44,6 +47,36 @@ public class DepthFirst<T> implements GraphFind<T> {
 
     private Node<T> getStart(final Graph<T> graph) {
         return graph.getRoot() == null ? graph.getNodes().get(0) : graph.getRoot();
+    }
+
+    public List<Node<T>> findPath(final Node<T> from, final Node<T> to) {
+        final LinkedList<Node<T>> path = new LinkedList<Node<T>>();
+        final BitMap visited = new BitMap();
+        final boolean found = findPath(from, to, visited, path);
+        if (found) {
+            return path;
+        }
+        else {
+            return null;
+        }
+    }
+
+    private boolean findPath(final Node<T> from, final Node<T> to, final BitMap visited, final LinkedList<Node<T>> path) {
+        visited.set(from.getIndex(), true);
+        if(to == from) {
+            path.addFirst(to);
+            return true;
+        }
+        for(final Node<T> e: from.getEdges()) {
+            if(!visited.get(e.getIndex())) {
+                final boolean found = findPath(e, to, visited, path);
+                if (found) {
+                    path.addFirst(from);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }
