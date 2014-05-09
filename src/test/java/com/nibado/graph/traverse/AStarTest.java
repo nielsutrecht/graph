@@ -1,6 +1,7 @@
 package com.nibado.graph.traverse;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class AStarTest {
         };
         final PathFind<Point> pathFind = new AStar<Point>(heuristic);
         final List<Node<Point>> path = pathFind.findPath(g.getNodes().get(0), g.getNodes().get(3));
+        assertNotNull("No path", path);
+
         final String result = path.toString();
         assertEquals("[(0:{0,0}), (4:{1,1}), (3:{0,2})]", result);
     }

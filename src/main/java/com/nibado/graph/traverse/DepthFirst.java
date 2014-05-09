@@ -7,7 +7,9 @@ import java.util.List;
 import com.nibado.graph.Graph;
 import com.nibado.graph.Node;
 
-public class DepthFirst<T> implements NodeFind<T>, PathFind<T> {
+public class DepthFirst<T> implements NodeFind<T>, PathFind<T>, NodeVisitor<T> {
+
+    private final List<NodeListener<T>> _listeners = new ArrayList<NodeListener<T>>();
 
     public Node<T> find(final Graph<T> graph, final T value) {
         final List<Node<T>> nodes = new ArrayList<Node<T>>(1);
@@ -29,6 +31,7 @@ public class DepthFirst<T> implements NodeFind<T>, PathFind<T> {
     }
 
     private void find(final Node<T> node, final T value, final boolean returnFirst, final BitMap visited, final List<Node<T>> nodes) {
+        visit(node);
         visited.set(node.getIndex(), true);
         if (nodes.size() > 0 && returnFirst) {
             return;
@@ -62,6 +65,7 @@ public class DepthFirst<T> implements NodeFind<T>, PathFind<T> {
     }
 
     private boolean findPath(final Node<T> from, final Node<T> to, final BitMap visited, final LinkedList<Node<T>> path) {
+        visit(from);
         visited.set(from.getIndex(), true);
         if(to == from) {
             path.addFirst(to);
@@ -77,6 +81,16 @@ public class DepthFirst<T> implements NodeFind<T>, PathFind<T> {
             }
         }
         return false;
+    }
+
+    public void addListener(final NodeListener<T> listener) {
+        _listeners.add(listener);
+    }
+
+    private void visit(final Node<T> node) {
+        for (final NodeListener<T> l : _listeners) {
+            l.nodeVisited(node);
+        }
     }
 
 }

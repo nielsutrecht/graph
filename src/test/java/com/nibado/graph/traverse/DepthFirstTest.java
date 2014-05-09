@@ -3,6 +3,7 @@ package com.nibado.graph.traverse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -62,6 +63,26 @@ public class DepthFirstTest {
         final List<Node<Point>> path = pathFind.findPath(g.getNodes().get(0), g.getNodes().get(3));
         final String result = path.toString();
         assertEquals("[(0:{0,0}), (1:{3,0}), (2:{3,2}), (3:{0,2})]", result);
+    }
+
+    @Test
+    public void testListener() {
+        final Graph<String> g = GraphBuilderTest.buildStringGraph().getGraph();
+        final DepthFirst<String> df = new DepthFirst<String>();
+        final List<Node<String>> nodes = new ArrayList<Node<String>>();
+
+        df.addListener(new NodeListener<String>() {
+            public void nodeVisited(final Node<String> node) {
+                nodes.add(node);
+            }
+        });
+
+        final List<Node<String>> result = df.findAll(g, GraphBuilderTest.STRING_LIST[9]);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(g.getNodes().size(), nodes.size());
+
     }
 
 }
