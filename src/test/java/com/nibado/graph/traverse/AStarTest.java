@@ -21,7 +21,12 @@ public class AStarTest {
                 return from.distanceTo(to);
             }
         };
-        final PathFind<Point> pathFind = new AStar<Point>(heuristic);
+        final AStar<Point> pathFind = new AStar<Point>(heuristic);
+        pathFind.addListener(new NodeListener<Point>() {
+            public void nodeVisited(final Node<Point> node) {
+                System.out.println(node);
+            }
+        });
         final List<Node<Point>> path = pathFind.findPath(g.getNodes().get(0), g.getNodes().get(3));
         assertNotNull("No path", path);
 
