@@ -20,7 +20,7 @@ public final class World {
     }
 
     public void setWalls(final List<Wall> walls) {
-
+        _walls = walls;
     }
 
     @JsonProperty("navmesh")
@@ -29,7 +29,7 @@ public final class World {
     }
 
     public void setNavMesh(final NavMesh navMesh) {
-
+        _navMesh = navMesh;
     }
 
     public static World loadFrom(final File input) throws Exception {

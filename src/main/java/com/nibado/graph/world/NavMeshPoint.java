@@ -16,9 +16,18 @@ public class NavMeshPoint {
     public boolean equals(final Object o) {
         if (o instanceof NavMeshPoint) {
             final Vector2 otherVec = ((NavMeshPoint) o)._point;
-            return otherVec.dst2(_point) < 0.01f;
+            return otherVec.dst2(_point) < 0.1f;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return _point.toString();
+    }
+
+    public Vector2 getVector() {
+        return _point;
     }
 }
 

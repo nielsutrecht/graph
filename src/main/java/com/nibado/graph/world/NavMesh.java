@@ -18,7 +18,7 @@ public class NavMesh {
     }
 
     public void compile() {
-        final List<NavMeshPoint> points = new ArrayList<NavMeshPoint>();
+        final List<NavMeshPoint> points = new ArrayList<>();
 
         for(final NavMeshPoly poly: _polygons) {
             for (int i = 0; i < poly.getPoints().size(); i++) {
@@ -31,12 +31,13 @@ public class NavMesh {
                 }
             }
         }
+
     }
 
     public NavMeshPoly newPoly() {
         final NavMeshPoly poly = new NavMeshPoly();
         poly.setPoints(new ArrayList<NavMeshPoint>());
-
+        _polygons.add(poly);
         return poly;
     }
 }
