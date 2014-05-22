@@ -15,5 +15,6 @@ public abstract class MoveGenerator {
             return y == 6;
         }
     }
-    public abstract List<Move> getMoves(Board board, int x, int y);
+
+    public abstract List<Move> getMoves(Board board, GameState gameState, int x, int y);
 }
