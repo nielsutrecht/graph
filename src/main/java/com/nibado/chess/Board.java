@@ -3,27 +3,15 @@ package com.nibado.chess;
 import java.io.PrintStream;
 import java.util.Arrays;
 
-import com.nibado.collections.BitMap;
-
 public class Board {
-    public static final int FLAG_KING_MOVED_WHITE = 0;
-    public static final int FLAG_KING_MOVED_BLACK = 1;
-    public static final int FLAG_QS_ROOK_MOVED_WHITE = 2;
-    public static final int FLAG_QS_ROOK_MOVED_BLACK = 3;
-    public static final int FLAG_KS_ROOK_MOVED_WHITE = 4;
-    public static final int FLAG_KS_ROOK_MOVED_BLACK = 5;
-
     private final byte[] _board;
-    private final BitMap _flags;
 
     public Board() {
         _board = new byte[32];
-        _flags = new BitMap(8);
     }
 
     public Board(final Board other) {
         _board = Arrays.copyOf(other._board, 32);
-        _flags = new BitMap(other._flags);
     }
 
     /**
@@ -73,14 +61,6 @@ public class Board {
 
         _board[idx] = (byte) (val + (_board[idx] & mask));
         return this;
-    }
-
-    public void setFlag(final int flag) {
-        _flags.set(flag, true);
-    }
-
-    public boolean getFlag(final int flag) {
-        return _flags.get(flag);
     }
 
     public void print(final PrintStream out) {
