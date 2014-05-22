@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.nibado.collections.BitMap;
 import com.nibado.graph.Node;
 
 public class AStar<T> implements PathFind<T>, NodeVisitor<T> {

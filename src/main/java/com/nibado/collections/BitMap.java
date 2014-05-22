@@ -1,24 +1,27 @@
-package com.nibado.graph.traverse;
+package com.nibado.collections;
 
 import java.util.Arrays;
 
-class BitMap {
+public class BitMap {
     private byte[] _map;
     private int _size;
     private final static int GROWTH_FACTOR = 2;
 
-    BitMap() {
+    public BitMap() {
         this(1000);
     }
 
-    BitMap(final int size) {
+    public BitMap(final int size) {
         _size = size;
         _map = new byte[byteSize(size)];
     }
 
+    public BitMap(final BitMap other) {
+        _size = other._size;
+        _map = Arrays.copyOf(other._map, other._map.length);
+    }
 
-
-    void set(final int index, final boolean value) {
+    public void set(final int index, final boolean value) {
         while (index >= _size)
             grow();
 
@@ -36,7 +39,7 @@ class BitMap {
         }
     }
 
-    boolean get(final int index) {
+    public boolean get(final int index) {
         if(index >= _size) {
             throw new IndexOutOfBoundsException("Index " + index + " while size is " + _size);
         }
@@ -49,7 +52,7 @@ class BitMap {
         return (byte) (_map[byteIndex] & mask) == mask;
     }
 
-    int size() {
+    public int size() {
         return _size;
     }
 

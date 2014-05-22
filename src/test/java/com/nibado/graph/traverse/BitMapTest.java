@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.nibado.collections.BitMap;
+
 public class BitMapTest {
     @Test
     public void testMap() {

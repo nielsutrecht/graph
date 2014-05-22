@@ -23,25 +23,31 @@ public class Piece {
         return _white;
     }
 
+    public boolean isOpponent(final Piece other) {
+        return _white != other._white;
+    }
+
     @Override
     public String toString() {
-        return _white ? "W:" : "B:" + _type.toString();
+        return (_white ? "W:" : "B:") + _type.toString();
     }
 
     public enum Type {
-        KING(1, "king"),
-        QUEEN(2, "queen"),
-        BISHOP(3, "bishop"),
-        KNIGHT(4, "knight"),
-        ROOK(5, "rook"),
-        PAWN(6, "pawn");
+        KING(1, "king", "K"),
+        QUEEN(2, "queen", "Q"),
+        BISHOP(3, "bishop", "B"),
+        KNIGHT(4, "knight", "N"),
+        ROOK(5, "rook", "R"),
+        PAWN(6, "pawn", "P");
 
         private final int _id;
         private final String _name;
+        private String _short;
 
-        Type(final int id, final String name) {
+        Type(final int id, final String name, final String shortName) {
             _id = id;
             _name = name;
+            _short = shortName;
         }
 
         public int getId() {
@@ -51,6 +57,10 @@ public class Piece {
         @Override
         public String toString() {
             return _name;
+        }
+
+        public String getShortName() {
+            return _short;
         }
 
         public static Type forId(final int id) {
@@ -63,12 +73,16 @@ public class Piece {
         }
     }
 
+    public static Piece get(final Type type, final boolean white) {
+        return get(type.getId(), white);
+    }
+
     public static Piece get(final int type, final boolean white) {
         if(white) {
-            return whites[type];
+            return whites[type - 1];
         }
         else {
-            return blacks[type];
+            return blacks[type - 1];
         }
     }
 
