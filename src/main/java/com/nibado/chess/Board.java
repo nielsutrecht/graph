@@ -14,6 +14,9 @@ public class Board {
         _board = Arrays.copyOf(other._board, 32);
     }
 
+    public boolean isEmpty(final int x, final int y) {
+        return get(x, y) == null;
+    }
     /**
      *
      * @param x X loc (A-H left to right)

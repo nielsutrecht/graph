@@ -6,13 +6,19 @@ public class Move {
     private final int _xTo;
     private final int _yFrom;
     private final int _yTo;
+    private final boolean _capture;
 
     public Move(final Board board, final int xFrom, final int yFrom, final int xTo, final int yTo) {
+        this(board, xFrom, yFrom, xTo, yTo, false);
+    }
+
+    public Move(final Board board, final int xFrom, final int yFrom, final int xTo, final int yTo, final boolean capture) {
         _board = board;
         _xFrom = xFrom;
         _xTo = xTo;
         _yFrom = yFrom;
         _yTo = yTo;
+        _capture = capture;
     }
 
     public Board getBoard() {
@@ -35,6 +41,10 @@ public class Move {
         return _yTo;
     }
 
+    public boolean isCapture() {
+        return _capture;
+    }
+
     public Board getResult() {
         final Board board = new Board(_board);
         final Piece p = _board.get(_xFrom, _yFrom);
@@ -42,4 +52,5 @@ public class Move {
         board.set(_xTo, _yTo, p);
         return board;
     }
+
 }
