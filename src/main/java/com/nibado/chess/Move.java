@@ -53,4 +53,9 @@ public class Move {
         return board;
     }
 
+    @Override
+    public String toString() {
+        return _xFrom + "," + _yFrom + ">" + _xTo + "," + _yTo + (_capture ? "+" : "");
+    }
+
 }
